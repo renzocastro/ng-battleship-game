@@ -1,0 +1,57 @@
+<div class="container">
+  <div class="controls">
+    <button mat-raised-button type="button" routerLink="/start">Return to Home</button>
+    <button mat-raised-button type="button" (click)="startGame()" [disabled]="this.game.started">Start Game</button>
+  </div>
+</div>
+
+<div class="container">
+  <div>{{ difficultText }}</div>
+</div>
+
+<div class="container">
+  <div *ngIf="this.game.started">{{ isTurnOfPlayerOne() ? 'Your turn (Right)' : 'CPU turn (Left)' }}</div>
+</div>
+
+<div class="container">
+
+  <div class="board-container">
+    <div class="board is-user">
+      <div class="board__content" [style]="'width: ' + boardWidth + 'px'">
+        <div
+          *ngFor="let tile of game.board1.tiles"
+          [class]="'board__tile ship-' + tile.ship?.index"
+          [style]="'width: ' + tileSize + 'px; height: ' + tileSize + 'px'"
+          [ngClass]="{
+            'open': isTileStateOpen(tile),
+            'explosion': isTileStateOpen(tile) && tile.ship,
+            'to-reveal': tile.ship && tile.ship.size == 0,
+            'reveal': tile.ship
+          }"
+        ></div>
+      </div>
+    </div>
+    <div class="controls">
+      <button mat-raised-button (click)="shuffle()" [disabled]="this.game.started">Shuffle</button>
+    </div>
+  </div>
+
+  <div class="board-container">
+    <div class="board is-cpu" [ngClass]="{ 'active': isTurnOfPlayerOne() }">
+      <div class="board__content" [style]="'width: ' + boardWidth + 'px'">
+        <div
+          *ngFor="let tile of game.board2.tiles"
+          [class]="'board__tile ship-' + tile.ship?.index"
+          [style]="'width: ' + tileSize + 'px; height: ' + tileSize + 'px'"
+          (click)="onTileClick(tile)"
+          [ngClass]="{
+            'open': isTileStateOpen(tile),
+            'explosion': isTileStateOpen(tile) && tile.ship,
+            'to-reveal': tile.ship && tile.ship.size == 0
+          }"
+        ></div>
+      </div>
+    </div>
+  </div>
+
+</div>

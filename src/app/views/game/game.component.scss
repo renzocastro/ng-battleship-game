@@ -1,0 +1,138 @@
+:root {
+  --bg-color-reveal: 0, 0, 0;
+}
+
+$explosion-width: 480px;
+$explosion-height: 360px;
+$explosion-cols: 8;
+$explosion-rows: 6;
+$explosion-tile-width: calc($explosion-width / $explosion-cols);
+$explosion-tile-height: calc($explosion-height / $explosion-rows);
+
+@keyframes explosionX {
+  from { background-position-x: 0px; }
+  to { background-position-x: #{$explosion-width * -1}; }
+}
+
+@keyframes explosionY {
+  from { background-position-y: 0px; }
+  to { background-position-y: #{$explosion-height * -1}; }
+}
+
+@keyframes reveal {
+  from {
+    background-color: rgb(var(--bg-color-reveal));
+  }
+  to {
+    background-color: rgb(var(--bg-color-reveal), 0.85);
+  }
+}
+
+.container {
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.board-container {
+  padding: 20px;
+}
+
+.controls {
+  padding: 20px;
+}
+
+.board {
+  display: inline-block;
+  padding: 2px 3px 3px 2px;
+  box-shadow: 0px 3px 10px rgba(0,0,0,0.2);
+
+  &__content {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__tile {
+    --bg-color: rgb(0, 167, 0);
+    --bg-color-hover: rgb(1, 147, 1);
+    background-color: var(--bg-color);
+    min-height: 20px;
+    min-width: 20px;
+    position: relative;
+    transition: background-color 120ms ease-in-out;
+
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 1px solid #fff;
+    }
+
+    &.open {
+      --bg-color: #ddd;
+    }
+
+    &.explosion {
+      position: relative;
+
+      &.open {
+        --bg-color: rgb(254, 156, 156);
+      }
+
+      &::before {
+        content: '';
+        background: url(/assets/sprite-explosion.png);
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        height: $explosion-tile-height;
+        width: $explosion-tile-width;
+        margin-top: #{$explosion-tile-height * -0.5};
+        margin-left: #{$explosion-tile-width * -0.5};
+
+        animation: explosionX 1s steps($explosion-cols) 3,
+                   explosionY 3s steps($explosion-rows) 1;
+      }
+    }
+
+    &.ship-0 { --bg-color-reveal: 237, 37, 78; }
+    &.ship-1 { --bg-color-reveal: 247, 240, 82; }
+    &.ship-2 { --bg-color-reveal: 209, 190, 156; }
+    &.ship-3 { --bg-color-reveal: 255, 140, 198; }
+    &.ship-4 { --bg-color-reveal: 89, 149, 237; }
+    &.ship-5 { --bg-color-reveal: 33, 26, 29; }
+    &.ship-6 { --bg-color-reveal: 99, 32, 238; }
+    &.ship-7 { --bg-color-reveal: 255, 186, 8; }
+    &.ship-8 { --bg-color-reveal: 117, 109, 84; }
+    &.ship-9 { --bg-color-reveal: 2, 8, 135; }
+
+    &.to-reveal {
+      animation: reveal 250ms 3 alternate;
+      background-color: rgb(var(--bg-color-reveal));
+    }
+
+    &.reveal {
+      background-color: rgb(var(--bg-color-reveal));
+    }
+  }
+
+  &.active.is-cpu .board__tile {
+    cursor: pointer;
+
+    &.open {
+      cursor: inherit;
+    }
+
+    &:hover:not(.open) {
+      background-color: var(--bg-color-hover);
+    }
+  }
+}
