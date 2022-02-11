@@ -1,23 +1,30 @@
-<div class="container">
-  <div class="controls">
-    <button mat-raised-button type="button" routerLink="/start">Return to Home</button>
-    <button mat-raised-button type="button" (click)="startGame()" [disabled]="this.game.started">Start Game</button>
+<div class="container p-5">
+  <button mat-raised-button type="button" (click)="startGame()" [disabled]="this.game.started">Start Game</button>
+</div>
+
+<div class="container flex">
+  <div>
+    <div>Turn: {{game.board1.getTotalTilesOpen()}}</div>
+    <div>Ship: {{game.board1.getTotalTilesWithShipAlive()}}</div>
   </div>
-</div>
-
-<div class="container">
-  <div>{{ difficultText }}</div>
-</div>
-
-<div class="container">
-  <div *ngIf="this.game.started">{{ isTurnOfPlayerOne() ? 'Your turn (Right)' : 'CPU turn (Left)' }}</div>
+  <div class="w-48"></div>
+  <div>
+    <div>{{ difficultText }}</div>
+    <div *ngIf="this.game.started">{{ isTurnOfPlayerOne() ? 'Your turn (Right)' : 'CPU turn (Left)' }}</div>
+  </div>
+  <div class="w-48"></div>
+  <div>
+    <div>Turn: {{game.board2.getTotalTilesOpen()}}</div>
+    <div>Ship: {{game.board2.getTotalTilesWithShipAlive()}}</div>
+  </div>
 </div>
 
 <div class="container">
 
   <div class="board-container">
-    <div class="board is-user">
-      <div class="board__content" [style]="'width: ' + boardWidth + 'px'">
+    <div class="board is-user" [ngClass]="{ 'active': isTurnOfPlayerTwo() }">
+
+      <div class="board__content ml-4 mt-4" [style]="'width: ' + boardWidth + 'px'">
         <div
           *ngFor="let tile of game.board1.tiles"
           [class]="'board__tile ship-' + tile.ship?.index"
@@ -28,17 +35,17 @@
             'to-reveal': tile.ship && tile.ship.size == 0,
             'reveal': tile.ship
           }"
-        ></div>
+        ><span [class]="'tile-' + getRowCol(tile.index)"></span></div>
       </div>
     </div>
-    <div class="controls">
+    <div class="p-5">
       <button mat-raised-button (click)="shuffle()" [disabled]="this.game.started">Shuffle</button>
     </div>
   </div>
 
   <div class="board-container">
     <div class="board is-cpu" [ngClass]="{ 'active': isTurnOfPlayerOne() }">
-      <div class="board__content" [style]="'width: ' + boardWidth + 'px'">
+      <div class="board__content ml-4 mt-4" [style]="'width: ' + boardWidth + 'px'">
         <div
           *ngFor="let tile of game.board2.tiles"
           [class]="'board__tile ship-' + tile.ship?.index"
@@ -49,7 +56,7 @@
             'explosion': isTileStateOpen(tile) && tile.ship,
             'to-reveal': tile.ship && tile.ship.size == 0
           }"
-        ></div>
+        ><span [class]="'tile-' + getRowCol(tile.index)"></span></div>
       </div>
     </div>
   </div>

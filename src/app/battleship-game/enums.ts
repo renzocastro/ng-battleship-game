@@ -15,7 +15,7 @@ export enum Difficult {
 }
 
 export enum Player {
-  One,
-  Two,
-  None
+  One = 'YOU',
+  Two = 'CPU',
+  None = 'NONE'
 }

@@ -14,8 +14,8 @@ export class GameService {
     this._leaderboardData.push(new LeaderboardData(attemps));
   }
 
-  getLeaderboardList(): string[] {
-    return this._leaderboardData.map((data: LeaderboardData) => data.toString());
+  getLeaderboardList(): LeaderboardData[] {
+    return [...this._leaderboardData];
   }
 
   getDifficultAsText(): string {

@@ -1,5 +1,5 @@
 import { Utils } from "../shared/utils";
-import { ShipDirection } from "./enums";
+import { ShipDirection, TileState } from "./enums";
 import { Ship } from "./ship";
 import { Tile } from "./tile";
 
@@ -26,6 +26,15 @@ export class Board {
 
   getTilesInUse(): Tile[] {
     return this.tiles.filter((tile: Tile) => !!tile.ship);
+  }
+
+  getTotalTilesOpen(): number {
+    return this.tiles.filter((tile: Tile) => tile.state == TileState.Open).length;
+  }
+
+  getTotalTilesWithShipAlive(): number {
+    //return this.tiles.filter((tile: Tile) => !!tile.ship && tile.ship.size > 0).length;
+    return this.ships.filter((ship: Ship) => ship.size > 0).length;
   }
 
   addShip(ship: Ship) {

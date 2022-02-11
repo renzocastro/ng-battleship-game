@@ -1,11 +1,7 @@
-<h2>Settings</h2>
+<h2 class="mat-title">Settings</h2>
 
 <div>
-  <button type="button" routerLink="/start">Return to Home</button>
-</div>
-
-<div>
-  <h3>Difficult: {{difficult}}</h3>
+  <p class="mat-body-1">Difficult: {{difficult}}</p>
 
   <mat-button-toggle-group name="difficult" aria-label="Difficult"
     #group="matButtonToggleGroup" [value]="difficult" (change)="changeDifficultTo(group.value)">

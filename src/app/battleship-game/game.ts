@@ -20,7 +20,6 @@ export class Game {
   turn: Player = Player.None;
   winner: Player = Player.None;
   started = false;
-  turnAttemps!: number;
   cpuCatchTileWithShip: Tile | null = null;
 
   constructor(settings: Settings) {
@@ -41,7 +40,6 @@ export class Game {
   }
 
   start() {
-    this.turnAttemps = 0;
     this.winner = Player.None;
     this.started = true;
     this.turn = Player.One;
@@ -97,8 +95,17 @@ export class Game {
   }
 
   whoWin(): Player {
+    let player: Player;
 
-    return Player.None;
+    if (this.board2.getTotalTilesWithShipAlive() === 0) {
+      player = Player.One;
+    } else if (this.board1.getTotalTilesWithShipAlive() === 0) {
+      player = Player.Two;
+    } else {
+      player = Player.None;
+    }
+
+    return player;
   }
 
   build() {

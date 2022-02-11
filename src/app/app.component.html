@@ -1,5 +1,15 @@
 <mat-toolbar color="primary">
-  <span>NG BattleShip - Tekton Test 2022</span>
+  <div class="container mx-auto flex items-center">
+    <button mat-icon-button routerLink="/start" aria-label="Return to Home">
+      <mat-icon>home</mat-icon>
+    </button>
+
+    <span class="ml-3">NG BattleShip - Tekton Test 2022</span>
+    <!-- <span class="flex-auto"></span> -->
+
+  </div>
 </mat-toolbar>
 
-<router-outlet></router-outlet>
+<div class="container mx-auto">
+  <router-outlet></router-outlet>
+</div>

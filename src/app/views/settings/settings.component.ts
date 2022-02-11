@@ -22,6 +22,7 @@ export class SettingsComponent implements OnInit {
   }
 
   changeDifficultTo(difficult: 'EASY' | 'NORMAL' | 'HARD') {
+    this.difficult = difficult;
     this._gameService.difficult = this._difficultDict[difficult];
   }
 
