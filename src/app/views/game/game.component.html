@@ -2,7 +2,7 @@
   <button mat-raised-button type="button" (click)="startGame()" [disabled]="this.game.started">Start Game</button>
 </div>
 
-<div class="container flex justify-center">
+<div class="container flex justify-center text-center">
   <div>
     <div>Turn: {{game.board1.getTotalTilesOpen()}}</div>
     <div>Ship: {{game.board1.getTotalTilesWithShipAlive()}}</div>
