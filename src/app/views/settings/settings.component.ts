@@ -7,7 +7,7 @@ import { GameService } from 'src/app/services/game.service';
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss']
 })
-export class SettingsComponent implements OnInit {
+export class SettingsComponent {
   difficult: String = this._gameService.getDifficultAsText();
 
   private _difficultDict = {
@@ -17,9 +17,6 @@ export class SettingsComponent implements OnInit {
   };
 
   constructor(private _gameService: GameService) { }
-
-  ngOnInit(): void {
-  }
 
   changeDifficultTo(difficult: 'EASY' | 'NORMAL' | 'HARD') {
     this.difficult = difficult;

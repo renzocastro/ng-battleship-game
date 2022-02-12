@@ -7,16 +7,12 @@ import { LeaderboardDataImpl } from 'src/app/shared/entities';
   templateUrl: './leaderboard.component.html',
   styleUrls: ['./leaderboard.component.scss']
 })
-export class LeaderboardComponent implements OnInit {
+export class LeaderboardComponent {
   displayedColumns: string[] = ['date', 'player', 'difficult', 'attemps'];
   datalist: LeaderboardDataImpl[];
 
   constructor(private gameService: GameService) {
     this.datalist = this.gameService.getLeaderboardList();
-  }
-
-  ngOnInit(): void {
-
   }
 
 }
