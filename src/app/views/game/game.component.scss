@@ -73,7 +73,7 @@ $explosion-tile-height: calc($explosion-height / $explosion-rows);
 
       &::before {
         content: '';
-        background: url(/assets/sprite-explosion.png);
+        background: url(../../../assets/sprite-explosion.png);
         display: block;
         position: absolute;
         top: 50%;
