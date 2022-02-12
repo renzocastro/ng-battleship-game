@@ -16,16 +16,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'tekton-angular-test-2022'`, () => {
+  it(`should have as title 'ng-battleship-game'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('tekton-angular-test-2022');
+    expect(app.title).toEqual('ng-battleship-game');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('tekton-angular-test-2022 app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('ng-battleship-game app is running!');
   });
 });
