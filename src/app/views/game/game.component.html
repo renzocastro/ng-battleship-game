@@ -1,8 +1,8 @@
-<div class="container p-5">
+<div class="container flex justify-center p-5">
   <button mat-raised-button type="button" (click)="startGame()" [disabled]="this.game.started">Start Game</button>
 </div>
 
-<div class="container flex">
+<div class="container flex justify-center">
   <div>
     <div>Turn: {{game.board1.getTotalTilesOpen()}}</div>
     <div>Ship: {{game.board1.getTotalTilesWithShipAlive()}}</div>
@@ -19,8 +19,7 @@
   </div>
 </div>
 
-<div class="container">
-
+<div class="container flex justify-center">
   <div class="board-container">
     <div class="board is-user" [ngClass]="{ 'active': isTurnOfPlayerTwo() }">
 
@@ -38,7 +37,7 @@
         ><span [class]="'tile-' + getRowCol(tile.index)"></span></div>
       </div>
     </div>
-    <div class="p-5">
+    <div class="p-5 text-center">
       <button mat-raised-button (click)="shuffle()" [disabled]="this.game.started">Shuffle</button>
     </div>
   </div>

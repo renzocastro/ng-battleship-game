@@ -28,27 +28,25 @@ $explosion-tile-height: calc($explosion-height / $explosion-rows);
   }
 }
 
-.container {
+/* .container {
   text-align: center;
   display: flex;
   flex-direction: row;
 
   align-items: flex-start;
   justify-content: center;
-}
+} */
 
 .board-container {
   padding: 20px;
 }
 
 .board {
-  display: inline-block;
-  padding: 5px;
   box-shadow: 0px 3px 10px rgba(0,0,0,0.2);
+  @apply p-2 inline-block;
 
   &__content {
-    display: flex;
-    flex-wrap: wrap;
+    @apply flex flex-wrap;
   }
 
   &__tile {
@@ -141,21 +139,18 @@ $explosion-tile-height: calc($explosion-height / $explosion-rows);
   span[class^="tile-"] {
     @apply block relative font-bold;
   }
-  span[class^="tile-A"] {
-    &::before {
-      top: -22px;
-      left: 50%;
-      width: 10px;
-      margin-left: -5px;
-      @apply absolute text-center;
-    }
+
+  span[class^="tile-A"]::before {
+    top: -22px;
+    left: 50%;
+    width: 10px;
+    margin-left: -5px;
+    @apply absolute text-center;
   }
 
   @for $i from 0 through 9 {
-    .tile-A#{$i} {
-      &::before {
-        content: "#{$i + 1}";
-      }
+    .tile-A#{$i}::before {
+      content: "#{$i + 1}";
     }
   }
 
@@ -166,7 +161,7 @@ $explosion-tile-height: calc($explosion-height / $explosion-rows);
       height: 100%;
       width: 20px;
       margin-left: -20px;
-      @apply flex items-center justify-center top-0 left-0 absolute block;
+      @apply flex items-center justify-center top-0 left-0 absolute;
     }
   }
 

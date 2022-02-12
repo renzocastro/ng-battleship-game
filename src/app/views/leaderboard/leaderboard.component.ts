@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GameService } from 'src/app/services/game.service';
-import { LeaderboardData } from 'src/app/shared/entities';
+import { LeaderboardDataImpl } from 'src/app/shared/entities';
 
 @Component({
   selector: 'app-leaderboard',
@@ -8,16 +8,10 @@ import { LeaderboardData } from 'src/app/shared/entities';
   styleUrls: ['./leaderboard.component.scss']
 })
 export class LeaderboardComponent implements OnInit {
-  displayedColumns: string[] = ['date', 'attemps'];
-  datalist: LeaderboardData[];
+  displayedColumns: string[] = ['date', 'player', 'difficult', 'attemps'];
+  datalist: LeaderboardDataImpl[];
 
   constructor(private gameService: GameService) {
-    // DUMMY DATA
-    // this.gameService.addLeaderboardData(12);
-    // this.gameService.addLeaderboardData(1);
-    // this.gameService.addLeaderboardData(23);
-    // this.gameService.addLeaderboardData(35);
-
     this.datalist = this.gameService.getLeaderboardList();
   }
 

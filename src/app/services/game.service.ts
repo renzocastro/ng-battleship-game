@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Difficult } from '../battleship-game/enums';
-import { LeaderboardData } from '../shared/entities';
+import { Difficult, Player } from '../battleship-game/enums';
+import { LeaderboardData, LeaderboardDataImpl } from '../shared/entities';
 
 @Injectable({
   providedIn: 'root'
@@ -20,19 +20,22 @@ export class GameService {
     const rawData = localStorage.getItem('leaderboard');
 
     if (rawData) {
-      this._leaderboardData = (<any[]>JSON.parse(rawData)).map(item => {
-        item.date = new Date(item.date);
-        return item;
-      });
+      this._leaderboardData = (<any[]>JSON.parse(rawData))
+        .map((item: any) => {
+          item.date = new Date(item.date);
+          return item;
+        })
+        .map((item: LeaderboardDataImpl) => LeaderboardData.deserialize(item));
     }
   }
 
   private saveData() {
-    localStorage.setItem('leaderboard', JSON.stringify(this._leaderboardData));
+    const dataSerialized = this._leaderboardData.map((lData: LeaderboardData) => lData.serialize());
+    localStorage.setItem('leaderboard', JSON.stringify(dataSerialized));
   }
 
-  addLeaderboardData(attemps: number) {
-    this._leaderboardData.push(new LeaderboardData(attemps));
+  addLeaderboardData(player: Player, attemps: number, difficult: string) {
+    this._leaderboardData.push(new LeaderboardData(player, attemps, difficult));
     this.saveData();
   }
 

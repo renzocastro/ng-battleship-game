@@ -50,38 +50,62 @@ export class GameComponent {
     }
 
     this.wait = true;
-    // this.game.turn = Player.None;
     tile.hit();
 
     setTimeout(() => {
-      const winner = this.game.whoWin();
+      let isThereAWinner = this.checkForAWinner();
 
-      if (winner !== Player.None) {
-        this.game.turn = Player.None;
-
-        if (winner === Player.One) {
-          this._gameService.addLeaderboardData(this.game.board1.getTotalTilesWithShipAlive());
-        } else if (winner === Player.Two) {
-          this._gameService.addLeaderboardData(this.game.board2.getTotalTilesWithShipAlive());
-        }
-
-        const dialogRef = this._dialog.open(WinnerDialogComponent, {
-          data: winner
-        });
-        dialogRef.afterClosed().subscribe(() => {
-          this._router.navigate(['/leaderboard']);
-        });
-
-      } else {
+      if (!isThereAWinner) {
         this.game.turn = Player.Two;
         this.game.playCPU();
 
-        setTimeout(() => {
-          this.wait = false;
-          this.game.turn = Player.One;
-        }, 500);
+        isThereAWinner = this.checkForAWinner();
+
+        if (!isThereAWinner) {
+          setTimeout(() => {
+            this.wait = false;
+            this.game.turn = Player.One;
+          }, 500);
+        }
       }
+
     }, 500);
+  }
+
+  checkForAWinner(): boolean {
+    const winner = this.game.whoWin();
+
+    if (winner !== Player.None) {
+      this.setWinner(winner);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  private setWinner(winner: Player) {
+    this.game.turn = Player.None;
+
+    let attemps = 0;
+
+    if (winner === Player.One) {
+      attemps = this.game.board2.getTotalTilesOpen();
+    } else if (winner === Player.Two) {
+      attemps = this.game.board1.getTotalTilesOpen();
+    }
+
+    this._gameService.addLeaderboardData(winner, attemps, this._gameService.getDifficultAsText());
+
+    this.showWinnerDialog(winner);
+  }
+
+  showWinnerDialog(winner: string) {
+    const dialogRef = this._dialog.open(WinnerDialogComponent, {
+      data: winner
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this._router.navigate(['/leaderboard']);
+    });
   }
 
   getRowCol(index: number): string {
